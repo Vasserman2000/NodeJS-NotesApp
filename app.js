@@ -1,25 +1,22 @@
-console.log('starting app.js');
-
 const fs = require('fs');
 const _ = require('lodash');
+const yargs = require('yargs');
 
 const notes = require('./notes.js');
 
-var command = process.argv[2];
+const argv = yargs.argv;
+var command = argv._[0];
+
  
-// if (command === 'add') {
-//     console.log('Adding new note');
-// } else if (command === 'list') {
-//     console.log('Listing all notes');
-// } else if (command === 'read') {
-//     console.log('Reading note');
-// } else if (command === 'remove') {
-//     console.log('Removing note');
-// } else {
-//     console.log('Command not recognized');
-// }
+if (command === 'add') {
+    notes.addNote(argv.title, argv.body);
+} else if (command === 'list') {
+    notes.getAll();
+} else if (command === 'read') {
+    notes.readNote(argv.title);
+} else if (command === 'remove') {
+    notes.removeNote(argv.title);
+} else {
+    console.log('Command not recognized');
+}
 
-const yargs = require('yargs').argv;
-
-console.log(yargs);
-console.log(yargs.name + ' year: ' + yargs.year);
