@@ -1,0 +1,1 @@
+nodemon --ignore /notes-data.json  app.js add --title="Some title" --body="Some body"
