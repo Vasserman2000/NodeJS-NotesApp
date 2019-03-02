@@ -18,7 +18,7 @@ var addNote = (title, body) => {
 
 
     var duplicateNotes = notes.filter( (note) => note.title === title );
-console.log(duplicateNotes);
+
     if (duplicateNotes.length === 0) {
         notes.push(note);
         fs.writeFileSync('notes-data.json', JSON.stringify(notes));
@@ -26,7 +26,8 @@ console.log(duplicateNotes);
 };
 
 var getAll = () => {
-    console.log('Getting all notes!');
+    var notes = fs.readFileSync('notes-data.json');
+    console.log(JSON.parse(notes));
 }
 
 var readNote = (title) => {
