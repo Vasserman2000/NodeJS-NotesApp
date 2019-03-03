@@ -31,7 +31,14 @@ var getAll = () => {
 }
 
 var readNote = (title) => {
-    console.log('Getting note with title: ', title);
+    var notes = fs.readFileSync("notes-data.json", 'utf8');
+    var jsonNotes = JSON.parse(notes);
+
+    jsonNotes.forEach(note => {
+       if (note.title === title) {
+           console.log(note);
+       }
+    });
 }
 
 var removeNote = (title) => {
