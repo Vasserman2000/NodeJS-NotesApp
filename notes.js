@@ -42,7 +42,19 @@ var readNote = (title) => {
 }
 
 var removeNote = (title) => {
-    console.log('Removing note with title: ', title);
+    var notes = fs.readFileSync('notes-data.json', 'utf8');
+
+    var notesJson = JSON.parse(notes);
+
+    notesJson.forEach((note, index) => {
+        if (note.title === title) {
+            console.log('delete this note:', note.title);
+            notesJson.splice(index,1);
+
+            console.log(JSON.stringify(notesJson));
+            fs.writeFileSync('notes-data.json', JSON.stringify(notesJson));
+        }
+    });
 }
 
 module.exports = {
