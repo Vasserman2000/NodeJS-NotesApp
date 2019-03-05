@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require('chalk');
 
 var addNote = (title, body) => {
 
@@ -22,6 +23,7 @@ var addNote = (title, body) => {
     if (duplicateNotes.length === 0) {
         notes.push(note);
         fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+        console.log(chalk.bgGreen('Note added: ', JSON.stringify(note)));
     }
 };
 
@@ -48,10 +50,9 @@ var removeNote = (title) => {
 
     notesJson.forEach((note, index) => {
         if (note.title === title) {
-            console.log('delete this note:', note.title);
+            console.log(chalk.bgRed('deleting a note with title: ', note.title));
             notesJson.splice(index,1);
 
-            console.log(JSON.stringify(notesJson));
             fs.writeFileSync('notes-data.json', JSON.stringify(notesJson));
         }
     });
