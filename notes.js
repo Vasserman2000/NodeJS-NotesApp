@@ -24,23 +24,33 @@ var addNote = (title, body) => {
         notes.push(note);
         fs.writeFileSync('notes-data.json', JSON.stringify(notes));
         console.log(chalk.bgGreen('Note added: ', JSON.stringify(note)));
+    } else {
+        console.log(chalk.black.bgYellow('A note with the same title already exist!'));
     }
 };
 
 var getAll = () => {
     var notes = fs.readFileSync('notes-data.json');
-    console.log(JSON.parse(notes));
+    var number = 0;
+    JSON.parse(notes).forEach((note, index) => {
+        number = index+1;
+        console.log(chalk.white.bgBlue('', number, '- Title: ', note.title, ', Body: ', note.body));
+    });
 }
 
 var readNote = (title) => {
     var notes = fs.readFileSync("notes-data.json", 'utf8');
     var jsonNotes = JSON.parse(notes);
-
+     var found = false;
     jsonNotes.forEach(note => {
        if (note.title === title) {
-           console.log(note);
+           console.log(chalk.white.bgBlue(note.body));
+           found = true;
        }
     });
+    if (!found) {
+        console.log(chalk.black.bgYellow('A note with the title: ', title, ' not found!'));
+    }
 }
 
 var removeNote = (title) => {
@@ -54,6 +64,10 @@ var removeNote = (title) => {
             notesJson.splice(index,1);
 
             fs.writeFileSync('notes-data.json', JSON.stringify(notesJson));
+        } else {
+            if (index == notesJson.length - 1) {
+                console.log(chalk.black.bgYellow('A note with the title: ', title, ' not found!'));
+            }
         }
     });
 }
